@@ -1,13 +1,13 @@
 version: '3.8'
 
 services:
-  urfd:
-    image: mfiscus/urfd:latest
-    container_name: urfd
-    hostname: urfd_container
+  mrefd:
+    image: mfiscus/mrefd:latest
+    container_name: mrefd
+    hostname: mrefd_container
     environment:
       # only set CALLHOME to true once your are certain your configuration is correct
-      # make sure you backup your callinghome.php file (which should be located on the docker host in /opt/urfd/) 
+      # make sure you backup your callinghome.php file (which should be located on the docker host in /opt/mrefd/) 
       CALLHOME: 'false' 
       CALLSIGN: 'your_callsign'
       EMAIL: 'your@email.com'
@@ -15,7 +15,7 @@ services:
       PORT: '80'
       XLXNUM: 'XLX000'
       COUNTRY: 'United States'
-      DESCRIPTION: 'My urfd-docker reflector'
+      DESCRIPTION: 'My mrefd-docker reflector'
       # Define how many modules you require
       MODULES: '4'
       # Name your modules however you like (container only supports naming first 4)
@@ -26,5 +26,5 @@ services:
       TZ: 'UTC'
     volumes:
       # local directory where state and config files (including callinghome.php) will be saved
-      - /opt/urfd:/config
+      - /opt/mrefd:/config
     restart: unless-stopped
