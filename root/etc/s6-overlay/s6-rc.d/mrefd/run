@@ -1,6 +1,6 @@
 #!/command/with-contenv sh
 
-PIDFILE="/config/xlxd.pid"
+PIDFILE="/config/mrefd.pid"
 
 # Create pid file for service uptime dashboard class
 touch ${PIDFILE}
