@@ -1,6 +1,6 @@
 # MREFd Docker Image
 
-This Ubuntu Linux based Docker image allows you to run [n7tae's](https://github.com/n7tae) [URFd](https://github.com/n7tae/mrefd) without having to configure any files or compile any code.
+This Ubuntu Linux based Docker image allows you to run [N7TAE's](https://github.com/n7tae) [mrefd](https://github.com/n7tae/mrefd) without having to configure any files or compile any code.
 
 This is a currently a single-arch image and will only run on amd64 devices.
 
@@ -106,7 +106,7 @@ services:
 
 The parameters are split into two halves, separated by a colon, the left hand side representing the host and the right the container side.
 
-* `-v` - maps a local directory used for backing up state and configuration files (including callinghome.php) **required**
+* `-v` - maps a local directory used for configuration files **required**
 * `-e` - used to set environment variables in the container
 
 ## License
