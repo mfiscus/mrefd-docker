@@ -1,41 +1,45 @@
 version: '3.8'
 
 services:
-  tcd:
-    image: mfiscus/tcd:latest
-    container_name: tcd
-    hostname: tcd_container
-    privileged: true
-    restart: unless-stopped
-
   mrefd:
     image: mfiscus/mrefd:latest
     container_name: mrefd
     hostname: mrefd_container
-    depends_on:
-      tcd:
-        condition: service_healthy
-        restart: true
     environment:
-      # only set CALLHOME to true once your are certain your configuration is correct
-      # make sure you backup your callinghome.php file (which should be located on the docker host in /opt/mrefd/) 
-      CALLHOME: 'false' 
-      CALLSIGN: 'your_callsign'
-      EMAIL: 'your@email.com'
-      URL: 'your_domain.com'
-      PORT: '80'
-      XLXNUM: 'XLX000'
-      COUNTRY: 'United States'
-      DESCRIPTION: 'My mrefd-docker reflector'
-      # Define how many modules you require
-      MODULES: '4'
-      # Name your modules however you like (container only supports naming first 4)
-      MODULEA: 'Main'
-      MODULEB: 'D-Star'
-      MODULEC: 'DMR'
-      MODULED: 'YSF'
       TZ: 'UTC'
+      EMAILADDR: 'your@email.com'
+      COUNTRY: 'US'
+      DASHBOARDURL: 'your_domain.com'
+      PORT: '80'
+      CALLSIGN: 'M17-???'
+      MODULES: 'A'
+      SPONSOR: 'My Ham Radio Club'
+      MULTICLIENT: 'false' # must be enabled when behind proxy
+      BOOTSTRAP: 'xlx757.openquad.net'
+    networks:
+      - proxy
     volumes:
-      # local directory where state and config files (including callinghome.php) will be saved
       - /opt/mrefd:/config
+    restart: unless-stopped
+
+  gomrefdash:
+    image: dbehnke/gomrefdash:latest
+    container_name: gomrefdash
+    hostname: gomrefdash_container
+    user: 1000:1000
+    volumes:
+      - /opt/mrefd/mrefd.xml:/var/log/mrefd.xml
+      - /opt/mrefd/mrefd.pid:/var/run/mrefd.pid
+      - /opt/mrefd/callsign_country.csv:/var/callsign_country.csv
+    environment:
+      GOMREFDASH_HOSTPORT: ":8080"
+      GOMREFDASH_IPV4: "mrefd"          # Reflector IPv4 address
+      GOMREFDASH_IPV6: "NONE"  # Reflector IPv6 address (if none, use NONE)
+      GOMREFDASH_REFRESH: "20"            # Page refresh in seconds
+      GOMREFDASH_LASTHEARD: "20"          # Number of stations to display in Last Heard
+      GOMREFDASH_EMAIL: "your@email.com" # email address to contact about the reflector
+      GOMREFDASH_MREFFILE: "/var/log/mrefd.xml" # where the mrefd.xml is mounted
+      GOMREFDASH_MREFPIDFILE: "/var/run/mrefd.pid" # where the mrefd.pid is mounted
+      #- GOMREFDASH_SUBPATH: "/reflector" # uncomment e.g. /reflector would be http://yourhostname/reflector
+      GOMREFDASH_CALLSIGNCOUNTRYFILE: "/var/callsign_country.csv" # path to callsign_country.csv file
     restart: unless-stopped
