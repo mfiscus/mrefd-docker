@@ -15,7 +15,6 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
     apt update && \
     apt upgrade -y && \
     apt install -y \
-        apache2 \
         build-essential \
         cmake \
         libargon2-0-dev \
