@@ -44,7 +44,7 @@ services:
       PORT: '80'
       CALLSIGN: 'M17-???'
       MODULES: 'A'
-      SPONSOR: 'Chandler Hams'
+      SPONSOR: 'My Ham Radio Club'
       MULTICLIENT: 'true'
       BOOTSTRAP: 'xlx757.openquad.net'
     volumes:
