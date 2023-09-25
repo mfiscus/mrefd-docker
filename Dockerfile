@@ -102,7 +102,7 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
     rm -rf /src
 
 #UDP port 17000 (M17 protocol)
-EXPOSE 17000/udp
+EXPOSE ${PORT}/udp
 #UDP port 17171 for DHT
 EXPOSE 17171/udp
 
